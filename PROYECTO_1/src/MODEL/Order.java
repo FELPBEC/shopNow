@@ -18,5 +18,12 @@ public double ShowPrice(){
         }
     return finalPrice;
 }
-
+public String ShowProducts(){
+    String list = "Name.........Price \n";
+    for (int i = 0; i < orderProducts.size(); i++) {
+        list+=orderProducts.get(i).getName()+"   "+orderProducts.get(i).getPrice() +"\n";
+    }
+    list+="total price:";
+    return list;
+}
 }
