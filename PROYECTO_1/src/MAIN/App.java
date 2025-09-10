@@ -23,6 +23,7 @@ ArrayList<Product> catalog = ProductLoader.loadProdutcs("C:\\Users\\Lenovo\\Docu
                 if (foundProduct!=true) {
                     if (catalog.get(i).getIdProduct()==idProduct) {
                     testOrder.AddProduct(catalog.get(i));
+                    System.out.println("New product added "+catalog.get(i).toString());
                     foundProduct=true;
                     }
                 }
