@@ -1,6 +1,8 @@
 package MODEL;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Order {
     private int idOrder;
@@ -43,7 +45,8 @@ public String ShowProducts(){
     for (int i = 0; i < orderProducts.size(); i++) {
         list+=orderProducts.get(i).getName()+"   "+orderProducts.get(i).getPrice() + "\n";
     }
-    list+="fecha:"+buyDate.plusHours(24)+"     total price:";
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd 'de' MMMM yyyy HH:mm");
+    list+="pay date:"+buyDate.plusHours(24).format(formatter)+"     total price:";
     return list;
 }
 }
