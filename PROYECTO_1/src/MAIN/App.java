@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class App {
     public static void main(String[] args) throws Exception {
         Order testOrder=new Order(1);
-ArrayList<Product> catalog = ProductLoader.loadProdutcs("C:\\Users\\Lenovo\\Documents\\practicas\\PROYECTO_1\\src\\catalog.txt");
+        ArrayList<Product> catalog = ProductLoader.loadProdutcs("C:\\Users\\Lenovo\\Documents\\practicas\\PROYECTO_1\\src\\catalog.txt");
         Scanner sc = new Scanner(System.in);
             int idProduct=0;
         for (int i = 0; i < catalog.size(); i++) {
@@ -23,7 +23,6 @@ ArrayList<Product> catalog = ProductLoader.loadProdutcs("C:\\Users\\Lenovo\\Docu
                 if (foundProduct!=true) {
                     if (catalog.get(i).getIdProduct()==idProduct) {
                     testOrder.AddProduct(catalog.get(i));
-                    System.out.println("New product added "+catalog.get(i).toString());
                     foundProduct=true;
                     }
                 }
