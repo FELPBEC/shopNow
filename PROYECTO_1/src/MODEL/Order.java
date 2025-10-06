@@ -64,12 +64,9 @@ public String ShowProducts(){
         list+=orderProducts.get(i).getName()+"   "+orderProducts.get(i).getPrice() + "\n";
     }
     
-    list+="pay date:"+buyDate.plusHours(24).format(formatter)+"     total price:";
+    list+="fecha de pago :"+buyDate.plusHours(24).format(formatter)+"     total price:";
     PaymentMethod.ProcessPayment();
     return list;
 }
-public void Process(){
-    System.out.println("Procesando pago con ID: "+idOrder+"\n"+"Fecha de pago"+buyDate.plusHours(24).format(formatter));
-    PaymentMethod.ProcessPayment();
-}
+
 }

@@ -1,11 +1,11 @@
 package MODEL;
 
-import java.util.Date;
+import java.time.LocalDate;
 public class Card extends PaymentMethod {
     private String CardNumber;
-    private Date expiditionTime;
+    private LocalDate expiditionTime;
     private int CVV;
-    public Card(String ownerName, double amount, String cardNumber, Date expiditionTime, int cVV) {
+    public Card(String ownerName, double amount, String cardNumber, LocalDate expiditionTime, int cVV) {
         super(ownerName, amount);
         CardNumber = cardNumber;
         this.expiditionTime = expiditionTime;
@@ -17,10 +17,13 @@ public class Card extends PaymentMethod {
     public void setCardNyumber(String cardNyumber) {
         CardNumber = cardNyumber;
     }
-    public Date getExpiditionTime() {
+    public void setCardNumber(String cardNumber) {
+        CardNumber = cardNumber;
+    }
+    public LocalDate getExpiditionTime() {
         return expiditionTime;
     }
-    public void setExpiditionTime(Date expiditionTime) {
+    public void setExpiditionTime(LocalDate expiditionTime) {
         this.expiditionTime = expiditionTime;
     }
     public int getCVV() {
@@ -32,7 +35,7 @@ public class Card extends PaymentMethod {
     
      @Override
     public void ProcessPayment() {
-        System.out.println("Procesando pago con terjeta terminada en"+CardNumber.substring(CardNumber.length()-4));
+        System.out.println("Procesando pago con tarjeta terminada en: "+CardNumber.substring(CardNumber.length()-4));
         // TODO Auto-generated method stub
         super.ProcessPayment();
     }
