@@ -2,16 +2,18 @@ package MODEL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class Order {
     private int idOrder;
     private ArrayList<Product> orderProducts = new ArrayList<Product>();
     private LocalDateTime buyDate;
+    private PaymentMethod PaymentMethod;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd 'de' MMMM yyyy HH:mm");
 
-public Order(int idOrder ){
+public Order(int idOrder, PaymentMethod PaymentMethod){
     this.idOrder = idOrder; 
    this.buyDate=LocalDateTime.now();
+   this.PaymentMethod=PaymentMethod;
 }
 
 public int getIdOrder() {
@@ -30,6 +32,22 @@ public void setBuyDate(LocalDateTime buyDate) {
     this.buyDate = buyDate;
 }
 
+public ArrayList<Product> getOrderProducts() {
+    return orderProducts;
+}
+
+public void setOrderProducts(ArrayList<Product> orderProducts) {
+    this.orderProducts = orderProducts;
+}
+
+public PaymentMethod getPaymentMethod() {
+    return PaymentMethod;
+}
+
+public void setPaymentMethod(PaymentMethod paymentMethod) {
+    PaymentMethod = paymentMethod;
+}
+
 public void AddProduct(Product newProduct){
     orderProducts.add(newProduct);
 }
@@ -41,12 +59,17 @@ public double ShowPrice(){
     return finalPrice;
 }
 public String ShowProducts(){
-    String list = "Name.........Price \n";
+    String list = "Nombre.........Precio \n";
     for (int i = 0; i < orderProducts.size(); i++) {
         list+=orderProducts.get(i).getName()+"   "+orderProducts.get(i).getPrice() + "\n";
     }
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd 'de' MMMM yyyy HH:mm");
+    
     list+="pay date:"+buyDate.plusHours(24).format(formatter)+"     total price:";
+    PaymentMethod.ProcessPayment();
     return list;
+}
+public void Process(){
+    System.out.println("Procesando pago con ID: "+idOrder+"\n"+"Fecha de pago"+buyDate.plusHours(24).format(formatter));
+    PaymentMethod.ProcessPayment();
 }
 }

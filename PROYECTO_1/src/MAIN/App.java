@@ -1,13 +1,16 @@
+package MAIN;
 
-import MODEL.Client;
-import MODEL.Order;
-import MODEL.Product;
-import MODEL.ProductLoader;
+import MODEL.*;
+
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 public class App {
     public static void main(String[] args) throws Exception {
-        Order testOrder=new Order(1);
+        Date fecha = new Date(2);
+        PaymentMethod card = new Card("pepe", 0,"1987",fecha, 12);
+        Order testOrder=new Order(1,card);
         ArrayList<Product> catalog = ProductLoader.loadProdutcs("C:\\Users\\Lenovo\\Documents\\practicas\\PROYECTO_1\\src\\catalog.txt");
         Scanner sc = new Scanner(System.in);
             int idProduct=0;
