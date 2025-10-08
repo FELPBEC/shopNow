@@ -7,37 +7,22 @@ import java.util.ArrayList;
 import java.util.Scanner;
 public class App {
     public static void main(String[] args) throws Exception {
-        LocalDate expirationDate = LocalDate.of(2023, 6, 5);
-        PaymentMethod card = new Card("pepe", 0,"1987353533535356",expirationDate, 12);
-        PaymentMethod bankTransfer = new BankTransfer("pepe", 0, 1234646464, "DaviVienda");
-        PaymentMethod digitalWllet = new DigitalWallet("pepe", 0, 1987648);
+        LocalDate expirationDate = null;
+        PaymentMethod card = null;
+        PaymentMethod bankTransfer = null;
+        PaymentMethod digitalWllet = null;
+        Order testOrder=new Order(1,card);
         ArrayList<Product> catalog = ProductLoader.loadProdutcs("C:\\Users\\Lenovo\\Documents\\practicas\\PROYECTO_1\\src\\catalog.txt");
         Scanner sc = new Scanner(System.in);
             int idProduct=0;
-            int methodPay = 0;
-        System.out.println("ingrese \n 1 si desea pagar con tarjeta,\n 2 para pagar con transferencia bancaria \n 3 para pagar con billetería digital");
-            methodPay=sc.nextInt();
-            Order testOrder=null;
-            switch (methodPay) {
-                case 1:
-                    testOrder=new Order(1,card);
-                    break;
-                case 2:
-                    testOrder=new Order(1,bankTransfer);
-                    break;
-                case 3:
-                    testOrder=new Order(1,digitalWllet);
-                break;
-                default:
-                    break;
-            }
+            byte methodPay = 0;
             
-        for (int i = 0; i < catalog.size(); i++) {
+            for (int i = 0; i < catalog.size(); i++) {
             System.out.println("id:"+catalog.get(i).getIdProduct()+"    name: "+catalog.get(i).getName()+"     price:"+catalog.get(i).getPrice());
         }
         do {
-            System.out.println("enter the id corresponding to the product you want to buy");
-            System.out.println("if you dont want add other product write 0");
+            System.out.println("ingrese la id del producto que quiere añadir al carrito");
+            System.out.println("Cuando desee dejar de añadir productos ingrese 0");
             idProduct= sc.nextInt();
             boolean foundProduct=false;
             for (int i = 0; i < catalog.size(); i++) {
@@ -48,10 +33,57 @@ public class App {
                     }
                 }
             }
-            if (foundProduct==false) {
-                System.out.println("ERROR!!! INVALID ID try again");
+            if (foundProduct==false && idProduct!=0) {
+                System.out.println("ERROR!!! ID invalida, intente de nuevo");
             }
         } while (idProduct!=0);
+
+        System.out.println("A continuación, seleccione su metodo de pago: \n 1 si desea pagar con tarjeta,\n 2 para pagar con transferencia bancaria \n 3 para pagar con billetería digital");
+            methodPay=sc.nextByte();
+            sc.nextLine();
+            String owner ="";
+            switch (methodPay) {
+                case 1:
+                    System.out.println("ha elegido tarjeta de crédito, \n a continuación se le solicitaran sus datos \n 1. Nombre del propietario:");
+                    owner=sc.nextLine();
+                    System.out.println("ahora indique el número de su tarjeta: ");
+                    String cardNumber = sc.nextLine();
+                    System.out.println("A continuación se le solicitará la fecha de expiración \n Indique el año de expiración de su tarjeta");
+                    int year = sc.nextInt();
+                    System.out.println("ahora indique el mes");
+                    int mounth = sc.nextInt();
+                    System.out.println("Finalmente indique el día del mes:");
+                    int dayOfMounth=sc.nextInt();
+                    expirationDate=LocalDate.of(year, mounth, dayOfMounth);
+                    System.out.println("ahora indique el CVV de su tarjeta");
+                    int CVV=sc.nextInt();
+                    card=  new Card(owner, 0,cardNumber,expirationDate, CVV);
+                    System.out.println("metodo de pago añadido, siga con su acción");
+                    testOrder.setPaymentMethod(card);
+                    break;
+                case 2:
+                    System.out.println("Ha elegido trasnferencia bancaria, \n indique el nombre del propietario de la cuenta");
+                    owner=sc.nextLine();
+                    System.out.println("A continuación indique el número de cuenta");
+                    int acountNumber=sc.nextInt();
+                    System.out.println("indique finalmente el nombre de su banco");
+                    String bankName= sc.nextLine();
+                    bankTransfer=new BankTransfer(owner, 0, acountNumber, bankName);
+                    testOrder.setPaymentMethod(bankTransfer);
+                    break;
+                case 3:
+                    System.out.println("ha elegido cartera digital,\n a continuación escriba el nombre del propietario");
+                    owner=sc.nextLine();
+                    System.out.println("escriba la ID de su cartera digital");
+                    int wlletId=sc.nextInt();
+                    digitalWllet=new DigitalWallet(owner, 0, wlletId);
+                    testOrder.setPaymentMethod(digitalWllet);
+                break;
+                default:
+                    break;
+            }
+            
+        
     System.out.println(testOrder.ShowProducts()+""+testOrder.ShowPrice());
     sc.close();
     }

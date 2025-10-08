@@ -28,3 +28,4 @@
 28,microphone,40000
 29,mouse,300
 30,fan,130
+31,telefono,29000
