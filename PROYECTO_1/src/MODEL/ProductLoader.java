@@ -1,7 +1,9 @@
 package MODEL;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ProductLoader {
@@ -17,8 +19,12 @@ public class ProductLoader {
 
                     productList.add(new Product(id, name, price));
                 }
-            }catch (Exception e){
-                System.out.println("Error reading the file");
+            }catch (FileNotFoundException e){
+                System.out.println("Archivo no encontrado \n verifique la ruta" + pathFile);  
+            }catch(IOException e){
+                System.out.println("Error al encontrar el archivo");
+            }finally{
+                System.out.println("Cierra del programa");
             }
         return productList;
         

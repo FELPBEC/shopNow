@@ -11,7 +11,7 @@ public class Order {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd 'de' MMMM yyyy HH:mm");
 
 public Order(int idOrder, PaymentMethod PaymentMethod){
-    this.idOrder = idOrder; 
+this.idOrder = idOrder; 
    this.buyDate=LocalDateTime.now();
    this.PaymentMethod=PaymentMethod;
 }
@@ -48,7 +48,8 @@ public void setPaymentMethod(PaymentMethod paymentMethod) {
     PaymentMethod = paymentMethod;
 }
 
-public void AddProduct(Product newProduct){
+public void AddProduct(Product newProduct) throws IllegalArgumentException{
+    if (newProduct==null) throw new IllegalArgumentException("El producto no puede ser nulo");
     orderProducts.add(newProduct);
 }
 public double ShowPrice(){

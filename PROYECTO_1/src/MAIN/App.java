@@ -82,8 +82,6 @@ public class App {
                 default:
                     break;
             }
-            
-        
     System.out.println(testOrder.ShowProducts()+""+testOrder.ShowPrice());
     sc.close();
     }
