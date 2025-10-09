@@ -1,5 +1,7 @@
 package MODEL;
 
+import javax.swing.JOptionPane;
+
 public class BankTransfer extends PaymentMethod{
     private int AcountNumbrer;
     private String BankName;
@@ -24,9 +26,7 @@ public class BankTransfer extends PaymentMethod{
     @Override
     public void ProcessPayment() {
         String encriptedAcountNumber=""+AcountNumbrer;
-        System.out.println("Procesando pago desde cuenta bancaria en la cuenta terminada en: "+encriptedAcountNumber.substring(encriptedAcountNumber.length()-4));
-        System.out.println("en el banco"+ BankName);
-        // TODO Auto-generated method stub
+        JOptionPane.showMessageDialog(null,"Procesando pago desde cuenta bancaria en la cuenta terminada en: "+encriptedAcountNumber.substring(encriptedAcountNumber.length()-4)+"\n en el banco"+ BankName );
         super.ProcessPayment();
     }
     

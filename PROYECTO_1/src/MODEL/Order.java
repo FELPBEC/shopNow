@@ -3,6 +3,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+
+
 public class Order {
     private int idOrder;
     private ArrayList<Product> orderProducts = new ArrayList<Product>();
@@ -64,9 +66,7 @@ public String ShowProducts(){
     for (int i = 0; i < orderProducts.size(); i++) {
         list+=orderProducts.get(i).getName()+"   "+orderProducts.get(i).getPrice() + "\n";
     }
-    
     list+="fecha de pago :"+buyDate.plusHours(24).format(formatter)+"     total price:";
-    PaymentMethod.ProcessPayment();
     return list;
 }
 

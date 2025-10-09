@@ -5,6 +5,8 @@ import MODEL.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import javax.swing.JOptionPane;
 public class App {
     public static void main(String[] args) throws Exception {
         LocalDate expirationDate = null;
@@ -16,14 +18,14 @@ public class App {
         Scanner sc = new Scanner(System.in);
             int idProduct=0;
             byte methodPay = 0;
-            
+            String list = "";
             for (int i = 0; i < catalog.size(); i++) {
-            System.out.println("id:"+catalog.get(i).getIdProduct()+"    name: "+catalog.get(i).getName()+"     price:"+catalog.get(i).getPrice());
+                list+="id:"+catalog.get(i).getIdProduct()+"    name: "+catalog.get(i).getName()+"     price:"+catalog.get(i).getPrice()+"\n"; 
         }
+        JOptionPane.showMessageDialog(null,list );
+
         do {
-            System.out.println("ingrese la id del producto que quiere añadir al carrito");
-            System.out.println("Cuando desee dejar de añadir productos ingrese 0");
-            idProduct= sc.nextInt();
+            idProduct=Integer.parseInt(JOptionPane.showInputDialog("ingrese la id del producto que quiere añadir al carrito \n Cuando desee dejar de añadir productos ingrese 0"));
             boolean foundProduct=false;
             for (int i = 0; i < catalog.size(); i++) {
                 if (foundProduct!=true) {
@@ -34,55 +36,52 @@ public class App {
                 }
             }
             if (foundProduct==false && idProduct!=0) {
-                System.out.println("ERROR!!! ID invalida, intente de nuevo");
+                JOptionPane.showMessageDialog(null, "ERROR!!! ID invalida, intente de nuevo");
             }
         } while (idProduct!=0);
-
-        System.out.println("A continuación, seleccione su metodo de pago: \n 1 si desea pagar con tarjeta,\n 2 para pagar con transferencia bancaria \n 3 para pagar con billetería digital");
-            methodPay=sc.nextByte();
-            sc.nextLine();
+            methodPay=Byte.parseByte(JOptionPane.showInputDialog("A continuación, seleccione su metodo de pago: \n 1 si desea pagar con tarjeta,\n 2 para pagar con transferencia bancaria \n 3 para pagar con billetería digital"));
             String owner ="";
             switch (methodPay) {
                 case 1:
-                    System.out.println("ha elegido tarjeta de crédito, \n a continuación se le solicitaran sus datos \n 1. Nombre del propietario:");
-                    owner=sc.nextLine();
-                    System.out.println("ahora indique el número de su tarjeta: ");
-                    String cardNumber = sc.nextLine();
-                    System.out.println("A continuación se le solicitará la fecha de expiración \n Indique el año de expiración de su tarjeta");
-                    int year = sc.nextInt();
-                    System.out.println("ahora indique el mes");
-                    int mounth = sc.nextInt();
-                    System.out.println("Finalmente indique el día del mes:");
-                    int dayOfMounth=sc.nextInt();
+                    owner=JOptionPane.showInputDialog("ha elegido tarjeta de crédito, \n" + //
+                                                " a continuación se le solicitaran sus datos \n" + //
+                                                " 1. Nombre del propietario:");
+                    String cardNumber = JOptionPane.showInputDialog("2. Número de su tarjeta:");
+                    JOptionPane.showMessageDialog(null, "3. fecha de expiración");
+                    int year = Integer.parseInt(JOptionPane.showInputDialog("Indique el año de expiración de su tarjeta"));
+                    int mounth = Integer.parseInt(JOptionPane.showInputDialog("ahora indique el mes (en número)"));
+                    int dayOfMounth=Integer.parseInt(JOptionPane.showInputDialog("Ahora ingrese el día del mes"));
                     expirationDate=LocalDate.of(year, mounth, dayOfMounth);
-                    System.out.println("ahora indique el CVV de su tarjeta");
-                    int CVV=sc.nextInt();
+                    int CVV=Integer.parseInt(JOptionPane.showInputDialog("ahora indique el CVV de su tarjeta"));
                     card=  new Card(owner, 0,cardNumber,expirationDate, CVV);
-                    System.out.println("metodo de pago añadido, siga con su acción");
+                    JOptionPane.showMessageDialog(null,"Medio de pago añadido");
                     testOrder.setPaymentMethod(card);
+                    card.ProcessPayment();
                     break;
                 case 2:
-                    System.out.println("Ha elegido trasnferencia bancaria, \n indique el nombre del propietario de la cuenta");
-                    owner=sc.nextLine();
-                    System.out.println("A continuación indique el número de cuenta");
-                    int acountNumber=sc.nextInt();
-                    System.out.println("indique finalmente el nombre de su banco");
-                    String bankName= sc.nextLine();
+                    owner=JOptionPane.showInputDialog("ha elegido transferencia bancaria, \n" + //
+                                                " a continuación se le solicitaran sus datos \n" + //
+                                                " 1. Nombre del propietario:");
+                    int acountNumber=Integer.parseInt(JOptionPane.showInputDialog("2. número de cuenta"));
+                    System.out.println();
+                    String bankName= JOptionPane.showInputDialog("3. nombre de su banco");
                     bankTransfer=new BankTransfer(owner, 0, acountNumber, bankName);
                     testOrder.setPaymentMethod(bankTransfer);
+                    bankTransfer.ProcessPayment();
                     break;
                 case 3:
-                    System.out.println("ha elegido cartera digital,\n a continuación escriba el nombre del propietario");
-                    owner=sc.nextLine();
-                    System.out.println("escriba la ID de su cartera digital");
-                    int wlletId=sc.nextInt();
+                    System.out.println();
+                    owner=JOptionPane.showInputDialog("ha elegido cartera digital,\n a continuación escriba el nombre del propietario");
+                    int wlletId=Integer.parseInt(JOptionPane.showInputDialog("escriba la ID de su cartera digital"));
                     digitalWllet=new DigitalWallet(owner, 0, wlletId);
                     testOrder.setPaymentMethod(digitalWllet);
+                    digitalWllet.ProcessPayment();
                 break;
                 default:
                     break;
             }
-    System.out.println(testOrder.ShowProducts()+""+testOrder.ShowPrice());
+            
+            JOptionPane.showMessageDialog(null,testOrder.ShowProducts()+""+testOrder.ShowPrice());
     sc.close();
     }
 }

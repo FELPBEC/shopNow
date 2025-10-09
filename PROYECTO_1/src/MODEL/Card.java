@@ -1,6 +1,8 @@
 package MODEL;
 
 import java.time.LocalDate;
+
+import javax.swing.JOptionPane;
 public class Card extends PaymentMethod {
     private String CardNumber;
     private LocalDate expiditionTime;
@@ -35,8 +37,7 @@ public class Card extends PaymentMethod {
     
      @Override
     public void ProcessPayment() {
-        System.out.println("Procesando pago con tarjeta terminada en: "+CardNumber.substring(CardNumber.length()-4));
-        // TODO Auto-generated method stub
+        JOptionPane.showMessageDialog(null,"Procesando pago con tarjeta terminada en: "+CardNumber.substring(CardNumber.length()-4));
         super.ProcessPayment();
     }
 

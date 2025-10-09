@@ -1,5 +1,7 @@
 package MODEL;
 
+import javax.swing.JOptionPane;
+
 public class DigitalWallet extends PaymentMethod{
     private int WlletId;
 
@@ -19,7 +21,7 @@ public class DigitalWallet extends PaymentMethod{
     @Override
     public void ProcessPayment() {
         String encriptedID=""+WlletId;
-        System.out.println("Pago procesado de la cartera virtual terminada en:"+encriptedID.substring(encriptedID.length()-4));
+        JOptionPane.showMessageDialog(null, "Pago procesado de la cartera virtual terminada en:"+encriptedID.substring(encriptedID.length()-4));
         super.ProcessPayment();
     }
 }
